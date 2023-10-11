@@ -1,13 +1,44 @@
-# Sample Hardhat Project
+# LOL NFT Marketplace | Blockchain - Solidity Smart Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+<img alt="Solidity" src="https://img.shields.io/badge/Solidity-e6e6e6?style=for-the-badge&logo=solidity&logoColor=black"/> <img alt="TypeScript" src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"/>
 
-Try running some of the following tasks:
+<hr/>
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+## Prerequisites
+
+- Git
+- NodeJs
+- npm
+
+## Getting Started
+
+- Install dependencies
+
+```sh
+npm install
+```
+
+### Run Tests
+
+```sh
+npm run test
+```
+
+### Generate Coverage Report
+
+```sh
+npm run coverage
+```
+
+### Deploy to Localhost
+
+```sh
+npm run deploy
+```
+
+### Deploy to Mainnet
+
+```sh
+# Ethereum (coming soon)
+npm run deploy:mainnet
 ```
