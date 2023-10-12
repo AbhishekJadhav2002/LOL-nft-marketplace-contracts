@@ -5,8 +5,8 @@ name: Post Release
       - master
   workflow_dispatch: null
 jobs:
-  install:
-    name: Install
+  coverage:
+    name: Coverage
     runs-on: ubuntu-latest
     steps:
       - name: ⏬ Checkout repository
@@ -18,11 +18,6 @@ jobs:
           cache: npm
       - name: "\U0001F4E6 Install dependencies"
         run: npm install
-  coverage:
-    name: Coverage
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
       - uses: ambersun1234/hardhat-test-action@v1
       - name: "\U0001F9EA Test and Coverage"
         run: npm run coverage
