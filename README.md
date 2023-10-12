@@ -1,9 +1,11 @@
 # LOL NFT Marketplace | Blockchain - Solidity Smart Contracts
 
 <img alt="Solidity" src="https://img.shields.io/badge/Solidity-e6e6e6?style=for-the-badge&logo=solidity&logoColor=black"/> <img alt="TypeScript" src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"/>
-
 <hr/>
 
+<!--START_SECTION:coverage-->
+
+<!--END_SECTION:coverage-->
 ## Prerequisites
 
 - Git

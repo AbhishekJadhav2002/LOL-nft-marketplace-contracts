@@ -26,16 +26,15 @@ jobs:
           grep -o 'class="strong">[0-9]*% ' | \
           sed 's/class="strong">//g' | \
           awk '{ sum += int($1); count++ } END { if (count > 0) { print sum/count } else { print 0 } }')
-          echo "coverage_percentage={\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$coverage_percentage%\", \"color\": \"green\"}" >> "$GITHUB_ENV"
+          echo "coverage_percentage=$coverage_percentage" >> "$GITHUB_ENV"
         shell: bash
-      - name: "📝 Write percentage to coverage.json"
+      - name: "📝 Write percentage to README"
+      # In README, replace the line between <!--START_SECTION:coverage--> and <!--END_SECTION:coverage--> with the coverage percentage badge, keeping the rest of the file intact.
         run: |
-          cd ${{ github.workspace }}
-          mkdir -p ${{ github.workspace }}/docs
-          echo ${{ env.coverage_percentage }} > ${{ github.workspace }}/docs/coverage.json
+          sed -i '/<!--START_SECTION:coverage-->/, /<!--END_SECTION:coverage-->/c\<!--START_SECTION:coverage-->\n![coverage](https://badgen.net/static/Coverage/${{ env.coverage_percentage }}%25/green)\n<!--END_SECTION:coverage-->' README.md
       - name: "✅ Commit and push changes"
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: Update coverage percentage"
+          commit_message: "docs: Update coverage percentage on README.md"
           push_options: "--force"
-          file_pattern: "*.json"
+          file_pattern: "*.md"
