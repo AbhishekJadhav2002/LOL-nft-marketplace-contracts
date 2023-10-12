@@ -28,13 +28,6 @@ jobs:
           awk '{ sum += int($1); count++ } END { if (count > 0) { print sum/count } else { print 0 } }')
           echo "coverage_percentage={\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$coverage_percentage%\", \"color\": \"green\"}" >> "$GITHUB_ENV"
         shell: bash
-  display:
-    name: Display
-    runs-on: ubuntu-latest
-    needs: coverage
-    steps:
-      - name: "⏬ Checkout repository"
-        uses: actions/checkout@v3
       - name: "📝 Write percentage to coverage.json"
         run: |
           cd ${{ github.workspace }}
