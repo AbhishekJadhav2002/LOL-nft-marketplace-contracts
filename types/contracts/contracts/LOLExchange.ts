@@ -23,11 +23,42 @@ import type {
   TypedContractMethod,
 } from "../common";
 
+export declare namespace LOLExchange {
+  export type ListingStruct = {
+    id: BigNumberish;
+    tokenContract: AddressLike;
+    nftContract: AddressLike;
+    tokenId: BigNumberish;
+    price: BigNumberish;
+    isSold: boolean;
+    seller: AddressLike;
+  };
+
+  export type ListingStructOutput = [
+    id: bigint,
+    tokenContract: string,
+    nftContract: string,
+    tokenId: bigint,
+    price: bigint,
+    isSold: boolean,
+    seller: string
+  ] & {
+    id: bigint;
+    tokenContract: string;
+    nftContract: string;
+    tokenId: bigint;
+    price: bigint;
+    isSold: boolean;
+    seller: string;
+  };
+}
+
 export interface LOLExchangeInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "buyNFT"
       | "createListing"
+      | "itemsListed"
       | "listings"
       | "owner"
       | "renounceOwnership"
@@ -50,6 +81,10 @@ export interface LOLExchangeInterface extends Interface {
     values: [AddressLike, AddressLike, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "itemsListed",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "listings",
     values: [BigNumberish]
   ): string;
@@ -66,6 +101,10 @@ export interface LOLExchangeInterface extends Interface {
   decodeFunctionResult(functionFragment: "buyNFT", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createListing",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "itemsListed",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "listings", data: BytesLike): Result;
@@ -193,6 +232,12 @@ export interface LOLExchange extends BaseContract {
     "nonpayable"
   >;
 
+  itemsListed: TypedContractMethod<
+    [],
+    [LOLExchange.ListingStructOutput[]],
+    "view"
+  >;
+
   listings: TypedContractMethod<
     [arg0: BigNumberish],
     [
@@ -238,6 +283,9 @@ export interface LOLExchange extends BaseContract {
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "itemsListed"
+  ): TypedContractMethod<[], [LOLExchange.ListingStructOutput[]], "view">;
   getFunction(
     nameOrSignature: "listings"
   ): TypedContractMethod<

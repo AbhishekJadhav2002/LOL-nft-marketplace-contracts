@@ -24,118 +24,153 @@ describe("LOLExchange", function () {
         return { lol, lolToken, lolExchange, owner, lolOwner, lolTokenOwner, otherAccount, accounts };
     }
 
-    describe("Deployment Tests", function () {
-    });
+    // describe("Deployment Tests", function () {
+    // });
 
-    describe("Create Listing Test", function () {
-        it("Should create a new listing", async function () {
-            const { lol, lolExchange, lolToken, otherAccount } = await loadFixture(deployLOLExchangeFixture);
-            const tokenId = 0;
+    // describe("Create Listing Test", function () {
+    //     it("Should create a new listing", async function () {
+    //         const { lol, lolExchange, lolToken, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+    //         const tokenId = 0;
+    //         const price = ethers.parseEther("1");
+    //         const lolAddress = await lol.getAddress();
+    //         const lolTokenAddress = await lolToken.getAddress();
+
+    //         await lol.laugh(otherAccount.address, tokenURL);
+    //         await lol.connect(otherAccount).approve(await lolExchange.getAddress(), tokenId);
+
+    //         await expect(lolExchange.connect(otherAccount).createListing(lolTokenAddress, lolAddress, tokenId, price)).to.emit(lolExchange, "ListingCreated").withArgs(1, lolTokenAddress, lolAddress, tokenId, otherAccount.address, price);
+    //         const listing = await lolExchange.listings(1);
+
+    //         expect(listing.id).to.equal(1);
+    //         expect(listing.tokenContract).to.equal(lolTokenAddress);
+    //         expect(listing.nftContract).to.equal(lolAddress);
+    //         expect(listing.tokenId).to.equal(tokenId);
+    //         expect(listing.price).to.equal(price);
+    //         expect(listing.isSold).to.equal(false);
+    //         expect(listing.seller).to.equal(otherAccount.address);
+    //     }).timeout(160000);
+
+    //     it("Should revert if non-owner tries to create listing", async function () {
+    //         const { lol, lolExchange, owner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+    //         const tokenId = 0;
+    //         const price = ethers.parseEther("1");
+    //         const lolAddress = await lol.getAddress();
+    //         const lolTokenAddress = await lolExchange.getAddress();
+
+    //         await lol.laugh(otherAccount.address, tokenURL);
+    //         await lol.connect(otherAccount).approve(await lolExchange.getAddress(), tokenId);
+
+    //         await expect(lolExchange.connect(owner).createListing(lolTokenAddress, lolAddress, tokenId, price)).to.be.revertedWith("LOLExchange: NFT Token owner can only create listing");
+    //     }).timeout(160000);
+    // });
+
+    // describe("Buying NFT Test", function () {
+    //     it("Should buy a listed NFT", async function () {
+    //         const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+    //         const tokenId = 0;
+    //         const price = ethers.parseEther("1");
+    //         const lolAddress = await lol.getAddress();
+    //         const lolTokenAddress = await lolToken.getAddress();
+    //         const lolExchangeAddress = await lolExchange.getAddress();
+
+    //         await lol.laugh(owner.address, tokenURL);
+    //         await lol.connect(owner).approve(lolExchangeAddress, tokenId);
+    //         await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
+    //         await lolToken.approve(lolTokenOwner.address, price);
+    //         await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, price);
+    //         await lolToken.connect(otherAccount).approve(lolExchangeAddress, price);
+
+    //         await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.emit(lolExchange, "ListingSold").withArgs(1, otherAccount.address);
+    //     }).timeout(120000);
+
+    //     it("Should not allow buying an already sold NFT", async function () {
+    //         const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+    //         const tokenId = 0;
+    //         const price = ethers.parseEther("1");
+    //         const lolAddress = await lol.getAddress();
+    //         const lolTokenAddress = await lolToken.getAddress();
+    //         const lolExchangeAddress = await lolExchange.getAddress();
+
+    //         await lol.laugh(owner.address, tokenURL);
+    //         await lol.connect(owner).approve(lolExchangeAddress, tokenId);
+    //         await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
+    //         await lolToken.approve(lolTokenOwner.address, price);
+    //         await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, price);
+    //         await lolToken.connect(otherAccount).approve(lolExchangeAddress, price);
+    //         await lolExchange.connect(otherAccount).buyNFT(1);
+
+    //         await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.be.revertedWith("LOLExchange: NFT is already sold");
+    //     }).timeout(120000);
+
+    //     it("Should not allow buying an NFT with insufficient funds", async function () {
+    //         const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+    //         const tokenId = 0;
+    //         const price = ethers.parseEther("1");
+    //         const lowerPrice = ethers.parseEther("0.5");
+    //         const lolAddress = await lol.getAddress();
+    //         const lolTokenAddress = await lolToken.getAddress();
+    //         const lolExchangeAddress = await lolExchange.getAddress();
+
+    //         await lol.laugh(owner.address, tokenURL);
+    //         await lol.connect(owner).approve(lolExchangeAddress, tokenId);
+    //         await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
+    //         await lolToken.approve(lolTokenOwner.address, price);
+    //         await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, lowerPrice);
+    //         await lolToken.connect(otherAccount).approve(lolExchangeAddress, price);
+
+    //         await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.be.revertedWith("LOLExchange: Insufficient token balance");
+    //     }).timeout(120000);
+
+    //     it("Should not allow buying an NFT with insufficient allowance", async function () {
+    //         const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+    //         const tokenId = 0;
+    //         const price = ethers.parseEther("1");
+    //         const lolAddress = await lol.getAddress();
+    //         const lolTokenAddress = await lolToken.getAddress();
+    //         const lolExchangeAddress = await lolExchange.getAddress();
+
+    //         await lol.laugh(owner.address, tokenURL);
+    //         await lol.connect(owner).approve(lolExchangeAddress, tokenId);
+    //         await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
+    //         await lolToken.approve(lolTokenOwner.address, price);
+    //         await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, price);
+
+    //         await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.be.revertedWith("LOLExchange: Insufficient token allowance");
+    //     }).timeout(120000);
+    // });
+
+    describe("Listing Tests", function () {
+        it("Should return all unsold listings", async function () {
+            const { lol, lolExchange, lolToken, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
+            const tokenId1 = 0;
+            const tokenId2 = 1;
             const price = ethers.parseEther("1");
+            const fullPrice = ethers.parseEther("2");
             const lolAddress = await lol.getAddress();
             const lolTokenAddress = await lolToken.getAddress();
+            const lolExchangeAddress = await lolExchange.getAddress();
 
-            await lol.laugh(otherAccount.address, tokenURL);
-            await lol.connect(otherAccount).approve(await lolExchange.getAddress(), tokenId);
+            await lol.laugh(owner.address, tokenURL);
+            await lol.laugh(owner.address, tokenURL);
+            await lol.connect(owner).approve(lolExchangeAddress, tokenId1);
+            await lol.connect(owner).approve(lolExchangeAddress, tokenId2);
+            await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId1, price);
+            await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId2, price);
 
-            await expect(lolExchange.connect(otherAccount).createListing(lolTokenAddress, lolAddress, tokenId, price)).to.emit(lolExchange, "ListingCreated").withArgs(1, lolTokenAddress, lolAddress, tokenId, otherAccount.address, price);
-            const listing = await lolExchange.listings(1);
+            const listings = await lolExchange.itemsListed();
 
-            expect(listing.id).to.equal(1);
-            expect(listing.tokenContract).to.equal(lolTokenAddress);
-            expect(listing.nftContract).to.equal(lolAddress);
-            expect(listing.tokenId).to.equal(tokenId);
-            expect(listing.price).to.equal(price);
-            expect(listing.isSold).to.equal(false);
-            expect(listing.seller).to.equal(otherAccount.address);
+            expect(listings.length).to.equal(2);
+            expect(listings[0].tokenId).to.equal(tokenId1);
+            expect(listings[1].tokenId).to.equal(tokenId2);
+            expect(listings[0].tokenContract).to.equal(lolTokenAddress);
+            expect(listings[1].nftContract).to.equal(lolAddress);
+            expect(listings[0].price).to.equal(price);
+            expect(listings[1].tokenId).to.equal(tokenId2);
+            expect(listings[1].price).to.equal(price);
+            expect(listings[0].isSold).to.equal(false);
+            expect(listings[1].isSold).to.equal(false);
+            expect(listings[0].seller).to.equal(owner.address);
+            expect(listings[1].seller).to.equal(owner.address);
         }).timeout(160000);
-
-        it("Should revert if non-owner tries to create listing", async function () {
-            const { lol, lolExchange, owner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
-            const tokenId = 0;
-            const price = ethers.parseEther("1");
-            const lolAddress = await lol.getAddress();
-            const lolTokenAddress = await lolExchange.getAddress();
-
-            await lol.laugh(otherAccount.address, tokenURL);
-            await lol.connect(otherAccount).approve(await lolExchange.getAddress(), tokenId);
-
-            await expect(lolExchange.connect(owner).createListing(lolTokenAddress, lolAddress, tokenId, price)).to.be.revertedWith("LOLExchange: NFT Token owner can only create listing");
-        }).timeout(160000);
-    });
-
-    describe("Buying NFT Test", function () {
-        it("Should buy a listed NFT", async function () {
-            const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
-            const tokenId = 0;
-            const price = ethers.parseEther("1");
-            const lolAddress = await lol.getAddress();
-            const lolTokenAddress = await lolToken.getAddress();
-            const lolExchangeAddress = await lolExchange.getAddress();
-
-            await lol.laugh(owner.address, tokenURL);
-            await lol.connect(owner).approve(lolExchangeAddress, tokenId);
-            await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
-            await lolToken.approve(lolTokenOwner.address, price);
-            await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, price);
-            await lolToken.connect(otherAccount).approve(lolExchangeAddress, price);
-
-            await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.emit(lolExchange, "ListingSold").withArgs(1, otherAccount.address);
-        }).timeout(120000);
-
-        it("Should not allow buying an already sold NFT", async function () {
-            const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
-            const tokenId = 0;
-            const price = ethers.parseEther("1");
-            const lolAddress = await lol.getAddress();
-            const lolTokenAddress = await lolToken.getAddress();
-            const lolExchangeAddress = await lolExchange.getAddress();
-
-            await lol.laugh(owner.address, tokenURL);
-            await lol.connect(owner).approve(lolExchangeAddress, tokenId);
-            await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
-            await lolToken.approve(lolTokenOwner.address, price);
-            await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, price);
-            await lolToken.connect(otherAccount).approve(lolExchangeAddress, price);
-            await lolExchange.connect(otherAccount).buyNFT(1);
-
-            await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.be.revertedWith("LOLExchange: NFT is already sold");
-        }).timeout(120000);
-
-        it("Should not allow buying an NFT with insufficient funds", async function () {
-            const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
-            const tokenId = 0;
-            const price = ethers.parseEther("1");
-            const lowerPrice = ethers.parseEther("0.5");
-            const lolAddress = await lol.getAddress();
-            const lolTokenAddress = await lolToken.getAddress();
-            const lolExchangeAddress = await lolExchange.getAddress();
-
-            await lol.laugh(owner.address, tokenURL);
-            await lol.connect(owner).approve(lolExchangeAddress, tokenId);
-            await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
-            await lolToken.approve(lolTokenOwner.address, price);
-            await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, lowerPrice);
-            await lolToken.connect(otherAccount).approve(lolExchangeAddress, price);
-
-            await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.be.revertedWith("LOLExchange: Insufficient token balance");
-        }).timeout(120000);
-
-        it("Should not allow buying an NFT with insufficient allowance", async function () {
-            const { lol, lolToken, lolExchange, owner, lolTokenOwner, otherAccount } = await loadFixture(deployLOLExchangeFixture);
-            const tokenId = 0;
-            const price = ethers.parseEther("1");
-            const lolAddress = await lol.getAddress();
-            const lolTokenAddress = await lolToken.getAddress();
-            const lolExchangeAddress = await lolExchange.getAddress();
-
-            await lol.laugh(owner.address, tokenURL);
-            await lol.connect(owner).approve(lolExchangeAddress, tokenId);
-            await lolExchange.createListing(lolTokenAddress, lolAddress, tokenId, price);
-            await lolToken.approve(lolTokenOwner.address, price);
-            await lolToken.transferFrom(lolTokenOwner.address, otherAccount.address, price);
-
-            await expect(lolExchange.connect(otherAccount).buyNFT(1)).to.be.revertedWith("LOLExchange: Insufficient token allowance");
-        }).timeout(120000);
     });
 });

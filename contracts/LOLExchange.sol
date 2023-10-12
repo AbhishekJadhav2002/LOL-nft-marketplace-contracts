@@ -91,4 +91,26 @@ contract LOLExchange is Ownable {
 
         emit ListingSold(listingId, msg.sender);
     }
+
+    function itemsListed() public view returns (Listing[] memory) {
+        uint totalUnsoldItems = 0;
+
+        for (uint256 i = 1; i <= _listingIds; i++) {
+            if (!listings[i].isSold) {
+                totalUnsoldItems++;
+            }
+        }
+
+        Listing[] memory _listings = new Listing[](totalUnsoldItems);
+
+        uint256 currentIndex = 0;
+        for (uint256 i = 1; i <= _listingIds; i++) {
+            if (!listings[i].isSold) {
+                _listings[currentIndex] = listings[i];
+                currentIndex++;
+            }
+        }
+
+        return _listings;
+    }
 }
