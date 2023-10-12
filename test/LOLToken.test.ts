@@ -11,7 +11,7 @@ describe("LOLToken", function () {
     async function deployLOLFixture() {
         const [owner, otherAccount] = await ethers.getSigners();
 
-        const LOL = await ethers.getContractFactory("LOLToken") as LOLToken__factory;
+        const LOL = await ethers.getContractFactory("LOLToken") as unknown as LOLToken__factory;
         const lol = await LOL.deploy(owner.address, taxRate) as LOLToken;
 
         return { lol, owner, otherAccount };
