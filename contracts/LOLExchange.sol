@@ -7,12 +7,11 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract LOLExchange is Ownable {
-    IERC20 public lolToken;
-
     uint256 private _listingIds;
 
     struct Listing {
         uint256 id;
+        address tokenContract;
         address nftContract;
         uint256 tokenId;
         uint256 price;
@@ -24,18 +23,18 @@ contract LOLExchange is Ownable {
 
     event ListingCreated(
         uint256 indexed id,
-        address indexed nftContract,
+        address tokenContract,
+        address nftContract,
         uint256 tokenId,
         address indexed seller,
         uint256 price
     );
     event ListingSold(uint256 indexed id, address indexed buyer);
 
-    constructor(address initialOwner, address _lolToken) Ownable(initialOwner) {
-        lolToken = IERC20(_lolToken);
-    }
+    constructor(address initialOwner) Ownable(initialOwner) {}
 
     function createListing(
+        address tokenContract,
         address nftContract,
         uint256 tokenId,
         uint256 price
@@ -43,7 +42,7 @@ contract LOLExchange is Ownable {
         IERC721 _nftContract = IERC721(nftContract);
         require(
             _nftContract.ownerOf(tokenId) == msg.sender,
-            "LOLExchange: Token owner can only create listing"
+            "LOLExchange: NFT Token owner can only create listing"
         );
         _nftContract.transferFrom(msg.sender, address(this), tokenId);
 
@@ -52,6 +51,7 @@ contract LOLExchange is Ownable {
 
         listings[listingId] = Listing({
             id: listingId,
+            tokenContract: tokenContract,
             nftContract: nftContract,
             tokenId: tokenId,
             seller: msg.sender,
@@ -59,19 +59,33 @@ contract LOLExchange is Ownable {
             isSold: false
         });
 
-        emit ListingCreated(listingId, nftContract, tokenId, msg.sender, price);
+        emit ListingCreated(
+            listingId,
+            tokenContract,
+            nftContract,
+            tokenId,
+            msg.sender,
+            price
+        );
     }
 
-    function buyNFT(uint256 listingId) public payable {
+    function buyNFT(uint256 listingId) public {
         Listing storage listing = listings[listingId];
         require(!listing.isSold, "LOLExchange: NFT is already sold");
 
-        lolToken.transferFrom(msg.sender, listing.seller, listing.price);
-        IERC721(listing.nftContract).transferFrom(
-            address(this),
-            msg.sender,
-            listing.tokenId
+        IERC20 tokenContract = IERC20(listing.tokenContract);
+        IERC721 nftContract = IERC721(listing.nftContract);
+        require(
+            tokenContract.balanceOf(msg.sender) >= listing.price,
+            "LOLExchange: Insufficient token balance"
         );
+        require(
+            tokenContract.allowance(msg.sender, address(this)) >= listing.price,
+            "LOLExchange: Insufficient token allowance"
+        );
+
+        tokenContract.transferFrom(msg.sender, listing.seller, listing.price);
+        nftContract.transferFrom(address(this), msg.sender, listing.tokenId);
 
         listing.isSold = true;
 

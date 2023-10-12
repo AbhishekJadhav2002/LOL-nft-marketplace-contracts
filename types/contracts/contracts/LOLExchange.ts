@@ -29,7 +29,6 @@ export interface LOLExchangeInterface extends Interface {
       | "buyNFT"
       | "createListing"
       | "listings"
-      | "lolToken"
       | "owner"
       | "renounceOwnership"
       | "transferOwnership"
@@ -48,13 +47,12 @@ export interface LOLExchangeInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "createListing",
-    values: [AddressLike, BigNumberish, BigNumberish]
+    values: [AddressLike, AddressLike, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "listings",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "lolToken", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -71,7 +69,6 @@ export interface LOLExchangeInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "listings", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "lolToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -86,6 +83,7 @@ export interface LOLExchangeInterface extends Interface {
 export namespace ListingCreatedEvent {
   export type InputTuple = [
     id: BigNumberish,
+    tokenContract: AddressLike,
     nftContract: AddressLike,
     tokenId: BigNumberish,
     seller: AddressLike,
@@ -93,6 +91,7 @@ export namespace ListingCreatedEvent {
   ];
   export type OutputTuple = [
     id: bigint,
+    tokenContract: string,
     nftContract: string,
     tokenId: bigint,
     seller: string,
@@ -100,6 +99,7 @@ export namespace ListingCreatedEvent {
   ];
   export interface OutputObject {
     id: bigint;
+    tokenContract: string;
     nftContract: string;
     tokenId: bigint;
     seller: string;
@@ -180,10 +180,15 @@ export interface LOLExchange extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  buyNFT: TypedContractMethod<[listingId: BigNumberish], [void], "payable">;
+  buyNFT: TypedContractMethod<[listingId: BigNumberish], [void], "nonpayable">;
 
   createListing: TypedContractMethod<
-    [nftContract: AddressLike, tokenId: BigNumberish, price: BigNumberish],
+    [
+      tokenContract: AddressLike,
+      nftContract: AddressLike,
+      tokenId: BigNumberish,
+      price: BigNumberish
+    ],
     [void],
     "nonpayable"
   >;
@@ -191,8 +196,9 @@ export interface LOLExchange extends BaseContract {
   listings: TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [bigint, string, bigint, bigint, boolean, string] & {
+      [bigint, string, string, bigint, bigint, boolean, string] & {
         id: bigint;
+        tokenContract: string;
         nftContract: string;
         tokenId: bigint;
         price: bigint;
@@ -202,8 +208,6 @@ export interface LOLExchange extends BaseContract {
     ],
     "view"
   >;
-
-  lolToken: TypedContractMethod<[], [string], "view">;
 
   owner: TypedContractMethod<[], [string], "view">;
 
@@ -221,11 +225,16 @@ export interface LOLExchange extends BaseContract {
 
   getFunction(
     nameOrSignature: "buyNFT"
-  ): TypedContractMethod<[listingId: BigNumberish], [void], "payable">;
+  ): TypedContractMethod<[listingId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "createListing"
   ): TypedContractMethod<
-    [nftContract: AddressLike, tokenId: BigNumberish, price: BigNumberish],
+    [
+      tokenContract: AddressLike,
+      nftContract: AddressLike,
+      tokenId: BigNumberish,
+      price: BigNumberish
+    ],
     [void],
     "nonpayable"
   >;
@@ -234,8 +243,9 @@ export interface LOLExchange extends BaseContract {
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [bigint, string, bigint, bigint, boolean, string] & {
+      [bigint, string, string, bigint, bigint, boolean, string] & {
         id: bigint;
+        tokenContract: string;
         nftContract: string;
         tokenId: bigint;
         price: bigint;
@@ -245,9 +255,6 @@ export interface LOLExchange extends BaseContract {
     ],
     "view"
   >;
-  getFunction(
-    nameOrSignature: "lolToken"
-  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;
@@ -281,7 +288,7 @@ export interface LOLExchange extends BaseContract {
   >;
 
   filters: {
-    "ListingCreated(uint256,address,uint256,address,uint256)": TypedContractEvent<
+    "ListingCreated(uint256,address,address,uint256,address,uint256)": TypedContractEvent<
       ListingCreatedEvent.InputTuple,
       ListingCreatedEvent.OutputTuple,
       ListingCreatedEvent.OutputObject
