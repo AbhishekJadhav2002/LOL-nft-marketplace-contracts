@@ -2,7 +2,7 @@ name: Post Release
 on:
   push:
     branches:
-      - main
+      - master
     path-ignore:
       - ".github/workflows/*"
   workflow_dispatch:
