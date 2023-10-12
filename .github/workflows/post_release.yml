@@ -23,8 +23,8 @@ jobs:
     needs: install
     runs-on: ubuntu-latest
     steps:
+      - uses: ambersun1234/hardhat-test-action@v1
       - name: "\U0001F9EA Test and Coverage"
-        uses: ambersun1234/hardhat-test-action@v1
         run: npm run coverage
       - name: "\U0001F4D1 Extract total coverage percentage"
         run: |
