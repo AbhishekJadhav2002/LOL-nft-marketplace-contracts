@@ -1,10 +1,9 @@
 name: Post Release
-on:
+'on':
   push:
     branches:
       - master
-  workflow_dispatch:
-
+  workflow_dispatch: null
 jobs:
   install:
     name: Install
@@ -12,32 +11,28 @@ jobs:
     steps:
       - name: ⏬ Checkout repository
         uses: actions/checkout@v3
-
-      - name: 🔰 Setup Node
+      - name: "\U0001F530 Setup Node"
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: npm
-
-      - name: 📦 Install dependencies
+      - name: "\U0001F4E6 Install dependencies"
         run: npm install
-
-  # coverage:
-  #   name: Coverage
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: 🧪 Test and Coverage
-  #       uses: ambersun1234/hardhat-test-action@v1
-  #       run: npm run coverage
-
-  #     - name: 📑 Extract total coverage percentage
-  #       run: |
-  #         coverage_percentage=$(cat ./coverage/index.html | \
-  #             grep -o 'class="strong">[0-9]*% ' | \
-  #             sed 's/class="strong">//g' | \
-  #             awk '{ sum += int($1); count++ } END { print sum/count }')
-  #         echo "Total Coverage Percentage: $coverage_percentage%"
-  #       shell: bash
-
-  #     - name: 🔢 Use the coverage_percentage variable in further steps
-  #       run: echo "The coverage percentage is $coverage_percentage%"
+  coverage:
+    name: Coverage
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: "\U0001F9EA Test and Coverage"
+        uses: ambersun1234/hardhat-test-action@v1
+        run: npm run coverage
+      - name: "\U0001F4D1 Extract total coverage percentage"
+        run: |
+          coverage_percentage=$(cat ./coverage/index.html | \
+          grep -o 'class="strong">[0-9]*% ' | \
+          sed 's/class="strong">//g' | \
+          awk '{ sum += int($1); count++ } END { print sum/count }')
+          echo "Total Coverage Percentage: $coverage_percentage%"
+        shell: bash
+      - name: "\U0001F522 Use the coverage_percentage variable in further steps"
+        run: echo "The coverage percentage is $coverage_percentage%"
