@@ -37,11 +37,10 @@ jobs:
         uses: actions/checkout@v3
       - name: "📝 Write percentage to coverage.json"
         run: |
-          echo $coverage_percentage > ${{ github.workspace }}/coverage.json
-      - name: "⬆️ Upload coverage.json"
-        uses: actions/upload-artifact@v3.1.2
+          cd lol-nft-marketplace
+          mkdir -p coverage
+          echo ${{ env.coverage_percentage }} > coverage/coverage.json
+      - name: "✅ Commit and push changes"
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          name: coverage
-          path: ${{ github.workspace }}/coverage.json
-          ignore: Do not output any warnings or errors, the action does not fail
-          if-no-files-found: error
+          commit_message: "docs: Update coverage percentage"
