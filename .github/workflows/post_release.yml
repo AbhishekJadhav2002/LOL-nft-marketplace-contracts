@@ -43,7 +43,5 @@ jobs:
         with:
           name: coverage
           path: ${{ github.workspace }}/coverage.json
-          warn: Warning while uploading artifact
-          error: Error while uploading artifact
           ignore: Do not output any warnings or errors, the action does not fail
           if-no-files-found: error
