@@ -9,7 +9,7 @@ jobs:
     name: Coverage
     runs-on: ubuntu-latest
     steps:
-      - name: ⏬ Checkout repository
+      - name: "⏬ Checkout repository"
         uses: actions/checkout@v3
       - name: "\U0001F530 Setup Node"
         uses: actions/setup-node@v3
@@ -33,11 +33,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: coverage
     steps:
-      - name: ⏬ Checkout repository
+      - name: "⏬ Checkout repository"
         uses: actions/checkout@v3
       - name: "📝 Write percentage to coverage.json"
-        uses: 1arp/create-a-file-action@0.3
+        run: |
+          echo $coverage_percentage > ${{ github.workspace }}/coverage.json
+      - name: "⬆️ Upload coverage.json"
+        uses: actions/upload-artifact@v3.1.2
         with:
-          path: "coverage"
-          file: "coverage.json"
-          content: ${{ env.coverage_percentage }}
+          name: coverage
+          path: ${{ github.workspace }}/coverage.json
+          warn: Warning while uploading artifact
+          error: Error while uploading artifact
+          ignore: Do not output any warnings or errors, the action does not fail
+          if-no-files-found: error
