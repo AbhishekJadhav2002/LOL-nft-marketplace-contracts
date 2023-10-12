@@ -26,7 +26,18 @@ jobs:
           grep -o 'class="strong">[0-9]*% ' | \
           sed 's/class="strong">//g' | \
           awk '{ sum += int($1); count++ } END { if (count > 0) { print sum/count } else { print 0 } }')
-          echo "coverage_percentage=$coverage_percentage" >> "$GITHUB_ENV"
+          echo "coverage_percentage={\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$coverage_percentage%\", \"color\": \"green\"}" >> "$GITHUB_ENV"
         shell: bash
-      - name: "\U0001F522 Use the coverage_percentage variable in further steps"
-        run: echo "The coverage percentage is ${{ env.coverage_percentage }}%"
+  display:
+    name: Display
+    runs-on: ubuntu-latest
+    needs: coverage
+    steps:
+      - name: ⏬ Checkout repository
+        uses: actions/checkout@v3
+      - name: "📝 Write percentage to coverage.json"
+        uses: 1arp/create-a-file-action@0.3
+        with:
+          path: "coverage"
+          file: "coverage.json"
+          content: ${{ env.coverage_percentage }}
