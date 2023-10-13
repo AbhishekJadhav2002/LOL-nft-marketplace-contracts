@@ -27,7 +27,7 @@ async function main() {
 
     console.log('Deploying LOLExchange...');
     const LOLExchange = await ethers.getContractFactory("LOLExchange") as LOLExchange__factory;
-    const lolExchange = await LOLExchange.deploy(owner.address, lolTokenAddress) as LOLExchange;
+    const lolExchange = await LOLExchange.deploy(owner.address) as LOLExchange;
     await lolExchange.waitForDeployment();
     _config.LOLExchange[hre.network.name as Networks] = await lolExchange.getAddress();
     console.log(`LOLExchange deployed to: ${await lolExchange.getAddress()}`);
@@ -36,6 +36,7 @@ async function main() {
     const LOLNFTExchange = await ethers.getContractFactory("LOLNFTExchange") as LOLNFTExchange__factory;
     const lolNFTExchange = await LOLNFTExchange.deploy(owner.address, lolAddress, lolTokenAddress) as LOLNFTExchange;
     await lolNFTExchange.waitForDeployment();
+    _config.LOLNFTExchange[hre.network.name as Networks] = await lolNFTExchange.getAddress();
     console.log(`LOLNFTExchange deployed to: ${await lolNFTExchange.getAddress()}`);
 
     fs.writeFileSync('./config/data.json', JSON.stringify(_config, null, 2));

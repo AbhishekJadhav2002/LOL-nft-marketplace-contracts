@@ -38,9 +38,15 @@ npm run coverage
 npm run deploy
 ```
 
-### Deploy to Mainnet
+### Deploy to Mainnet and Testnet
 
 ```sh
-# Ethereum (coming soon)
+# Sepolia Testnet
+npm run deploy:sepolia
+```
+
+
+```sh
+# Ethereum Mainnet
 npm run deploy:mainnet
 ```
