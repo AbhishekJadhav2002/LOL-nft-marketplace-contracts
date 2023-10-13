@@ -3,6 +3,9 @@ name: Post Release
   push:
     branches:
       - master
+    paths:
+      - 'contracts/**'
+      - 'test/**'
   workflow_dispatch: null
 jobs:
   coverage:
