@@ -13,6 +13,8 @@ contract LOL is ERC721URIStorage, Ownable {
         address initialOwner
     ) ERC721("LOL", "LOL") Ownable(initialOwner) {}
 
+    event Minted(address indexed minter, uint256 indexed tokenId, string tokenURI);
+
     function laugh(
         address person,
         string memory tokenURI
@@ -20,6 +22,8 @@ contract LOL is ERC721URIStorage, Ownable {
         uint256 tokenId = _nextTokenId++;
         _mint(person, tokenId);
         _setTokenURI(tokenId, tokenURI);
+
+        emit Minted(person, tokenId, tokenURI);
 
         return tokenId;
     }

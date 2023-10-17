@@ -1,7 +1,7 @@
 {
-  "name": "hardhat-practice",
+  "name": "lol-nft-marketplace",
   "version": "1.0.0",
-  "description": "Hardhat Practice",
+  "description": "A NFT marketplace for LOL NFT and LOL Token Exchange",
   "main": "index.js",
   "scripts": {
     "test": "npx hardhat test",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AbhishekJadhav2002/hardhat-practice.git"
+    "url": "git+https://github.com/AbhishekJadhav2002/LOL-nft-marketplace-contracts.git"
   },
   "keywords": [
     "hardhat",
@@ -29,9 +29,9 @@
   "author": "AbhishekJadhav2002",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AbhishekJadhav2002/hardhat-practice/issues"
+    "url": "https://github.com/AbhishekJadhav2002/LOL-nft-marketplace-contracts/issues"
   },
-  "homepage": "https://github.com/AbhishekJadhav2002/hardhat-practice#readme",
+  "homepage": "https://github.com/AbhishekJadhav2002/LOL-nft-marketplace-contracts#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "hardhat": "^2.18.0"

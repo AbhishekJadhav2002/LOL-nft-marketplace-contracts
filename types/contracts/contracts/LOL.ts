@@ -51,6 +51,7 @@ export interface LOLInterface extends Interface {
       | "ApprovalForAll"
       | "BatchMetadataUpdate"
       | "MetadataUpdate"
+      | "Minted"
       | "OwnershipTransferred"
       | "Transfer"
   ): EventFragment;
@@ -222,6 +223,24 @@ export namespace MetadataUpdateEvent {
   export type OutputTuple = [_tokenId: bigint];
   export interface OutputObject {
     _tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace MintedEvent {
+  export type InputTuple = [
+    minter: AddressLike,
+    tokenId: BigNumberish,
+    tokenURI: string
+  ];
+  export type OutputTuple = [minter: string, tokenId: bigint, tokenURI: string];
+  export interface OutputObject {
+    minter: string;
+    tokenId: bigint;
+    tokenURI: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -496,6 +515,13 @@ export interface LOL extends BaseContract {
     MetadataUpdateEvent.OutputObject
   >;
   getEvent(
+    key: "Minted"
+  ): TypedContractEvent<
+    MintedEvent.InputTuple,
+    MintedEvent.OutputTuple,
+    MintedEvent.OutputObject
+  >;
+  getEvent(
     key: "OwnershipTransferred"
   ): TypedContractEvent<
     OwnershipTransferredEvent.InputTuple,
@@ -553,6 +579,17 @@ export interface LOL extends BaseContract {
       MetadataUpdateEvent.InputTuple,
       MetadataUpdateEvent.OutputTuple,
       MetadataUpdateEvent.OutputObject
+    >;
+
+    "Minted(address,uint256,string)": TypedContractEvent<
+      MintedEvent.InputTuple,
+      MintedEvent.OutputTuple,
+      MintedEvent.OutputObject
+    >;
+    Minted: TypedContractEvent<
+      MintedEvent.InputTuple,
+      MintedEvent.OutputTuple,
+      MintedEvent.OutputObject
     >;
 
     "OwnershipTransferred(address,address)": TypedContractEvent<

@@ -29,7 +29,7 @@ describe("LOL", function () {
         it("Should mint one token correctly", async function () {
             const { lol, owner } = await loadFixture(deployLOLFixture);
 
-            await lol.laugh(owner.address, tokenURL);
+            await expect(lol.laugh(owner.address, tokenURL)).to.emit(lol, "Minted").withArgs(owner.address, 0, tokenURL);
 
             const receiptBalance = await lol.balanceOf(owner.address);
             const tokenURI = await lol.tokenURI(0);
