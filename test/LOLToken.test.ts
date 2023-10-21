@@ -22,7 +22,7 @@ describe("LOLToken", function () {
             const { lol, owner } = await loadFixture(deployLOLFixture);
             const _owner = await lol.owner();
             expect(_owner).to.equal(owner.address);
-        }).timeout(60000);;
+        }).timeout(60000);
 
         it("Should have correct Tax rate", async function () {
             const { lol } = await loadFixture(deployLOLFixture);

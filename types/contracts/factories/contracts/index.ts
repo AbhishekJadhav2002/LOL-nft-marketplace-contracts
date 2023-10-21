@@ -5,3 +5,4 @@ export { LOL__factory } from "./LOL__factory";
 export { LOLExchange__factory } from "./LOLExchange__factory";
 export { LOLNFTExchange__factory } from "./LOLNFTExchange__factory";
 export { LOLToken__factory } from "./LOLToken__factory";
+export { LOLVesting__factory } from "./LOLVesting__factory";

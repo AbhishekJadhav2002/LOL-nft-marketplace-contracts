@@ -1,4 +1,4 @@
-export type Tokens = "LOL" | "LOLToken" | "LOLExchange" | "LOLNFTExchange";
+export type Tokens = "LOL" | "LOLToken" | "LOLExchange" | "LOLNFTExchange" | "LOLVesting";
 
 export type Networks = "localhost" | "sepolia" | "mainnet";
 

@@ -5,3 +5,4 @@ export type { LOL } from "./LOL";
 export type { LOLExchange } from "./LOLExchange";
 export type { LOLNFTExchange } from "./LOLNFTExchange";
 export type { LOLToken } from "./LOLToken";
+export type { LOLVesting } from "./LOLVesting";
