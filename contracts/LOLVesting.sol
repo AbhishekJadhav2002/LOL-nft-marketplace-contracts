@@ -116,6 +116,7 @@ contract LOLVesting is Ownable {
             "LOLVesting: recipient must not be 0x0"
         );
         allocation[recipient] = allocation_;
+        claimed[recipient] = 0;
 
         emit AllocationAdded(recipient, allocation_);
     }
@@ -130,6 +131,7 @@ contract LOLVesting is Ownable {
             "LOLVesting: recipient must not be 0x0"
         );
         allocation[recipient] = 0;
+        claimed[recipient] = 0;
 
         emit AllocationRemoved(recipient);
     }

@@ -142,6 +142,7 @@ describe("LOLVesting", function () {
 
             await expect(lolVesting.addNewAllocation(otherAccount.address, ethers.parseEther("1000"))).to.emit(lolVesting, "AllocationAdded").withArgs(otherAccount.address, ethers.parseEther("1000"));
             expect(await lolVesting.allocation(otherAccount.address)).to.equal(ethers.parseEther("1000"));
+            expect(await lolVesting.claimed(otherAccount.address)).to.equal(0);
         }).timeout(60000);
 
         it("Should not be able to update allocation after vesting has started", async function () {
@@ -178,6 +179,7 @@ describe("LOLVesting", function () {
             await lolVesting.addNewAllocation(recipient, ethers.parseEther("1000"));
             await expect(lolVesting.removeAllocation(recipient)).to.emit(lolVesting, "AllocationRemoved").withArgs(recipient);
             expect(await lolVesting.allocation(recipient)).to.equal(0);
+            expect(await lolVesting.claimed(recipient)).to.equal(0);
         }).timeout(60000);
 
         it("Should not be able to remove allocation after vesting has started", async function () {
