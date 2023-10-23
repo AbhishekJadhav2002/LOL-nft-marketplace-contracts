@@ -6,6 +6,7 @@ import { LOL, LOLExchange, LOLExchange__factory, LOLNFTExchange, LOLNFTExchange_
 
 async function main() {
     const [owner, ...otherAccounts] = await ethers.getSigners();
+    const _config: Config = config;
     console.log(`Deploying contract from: ${owner.address}`);
 
     console.log('Deploying LOL...');
@@ -13,7 +14,6 @@ async function main() {
     const lol = await LOL.deploy(owner.address) as LOL;
     await lol.waitForDeployment();
     const lolAddress = await lol.getAddress();
-    const _config: Config = config;
     _config.LOL[hre.network.name as Networks] = lolAddress;
     console.log(`LOL deployed to: ${lolAddress}`);
 
@@ -40,11 +40,20 @@ async function main() {
     console.log(`LOLNFTExchange deployed to: ${await lolNFTExchange.getAddress()}`);
 
     console.log('Deploying LOLVesting...');
-    const allocations = otherAccounts.map((_account, index) => ethers.parseUnits(`${1000 * (index + 1)}`, 18).toString());
+    let recipients: string[] = [];
+    let allocations: string[] = [];
+    if (process.env.NODE_ENV === "development") {
+        recipients = otherAccounts.map((account) => account.address);
+        allocations = otherAccounts.map((_account, index) => ethers.parseUnits(`${1000 * (index + 1)}`, 18).toString());
+    } else {
+        const deployData = JSON.parse(fs.readFileSync('./config/vesting.json', 'utf8'));
+        recipients = deployData.recipients;
+        allocations = deployData.allocations;
+    }
     const startTime = Math.floor(Date.now() / 1000) + 60;
     const duration = 60 * 1;
     const LOLVesting = await ethers.getContractFactory("LOLVesting") as LOLVesting__factory;
-    const lolVesting = await LOLVesting.deploy(owner.address, lolTokenAddress, otherAccounts.map(account => account.address), allocations, `${startTime}`, `${duration}`) as LOLVesting;
+    const lolVesting = await LOLVesting.deploy(owner.address, lolTokenAddress, recipients, allocations, `${startTime}`, `${duration}`) as LOLVesting;
     await lolVesting.waitForDeployment();
     _config.LOLVesting[hre.network.name as Networks] = await lolVesting.getAddress();
     console.log(`LOLVesting deployed to: ${await lolVesting.getAddress()}`);
