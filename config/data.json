@@ -1,27 +1,27 @@
 {
   "LOL": {
     "localhost": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    "sepolia": "0x5B78E933A501Dd665593261621ed5D6183f73eD0",
+    "sepolia": "0x67fc48DC9De724Dad662A94719F1aa4Bd75cF412",
     "mainnet": ""
   },
   "LOLToken": {
     "localhost": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    "sepolia": "0x6400bB9913467ba0edAfF5eDB947bFa6FA56c898",
+    "sepolia": "0xf9F7E32dE4c0717298f55a7eE2c124Ee33005f3c",
     "mainnet": ""
   },
   "LOLExchange": {
     "localhost": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-    "sepolia": "0x34A782f724b986a0229d47F9EE4982Aa93CEe6Fb",
+    "sepolia": "0x1EeAe880797C5887A2A9e08632A3030030334e05",
     "mainnet": ""
   },
   "LOLNFTExchange": {
     "localhost": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-    "sepolia": "0x1eAF9A066D23E57Eb4Df02a98B73D22B6AF420B9",
+    "sepolia": "0xe9CE819A4957Dc9396Dd038B67C57D033d5C5d20",
     "mainnet": ""
   },
   "LOLVesting": {
     "localhost": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-    "sepolia": "0xDC8ecDdE982881e62b8A5a26c8feB1E3BD62B372",
+    "sepolia": "0xd702d6B0ef45C00257241c21AD6E60c9F2fFeEAE",
     "mainnet": ""
   }
 }

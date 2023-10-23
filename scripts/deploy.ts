@@ -48,13 +48,15 @@ async function main() {
     } else {
         const deployData = JSON.parse(fs.readFileSync('./config/vesting.json', 'utf8'));
         recipients = deployData.recipients;
-        allocations = deployData.allocations;
+        allocations = deployData.allocations.map((allocation: string) => ethers.parseEther(allocation).toString());
     }
     const startTime = Math.floor(Date.now() / 1000) + 60;
     const duration = 60 * 1;
     const LOLVesting = await ethers.getContractFactory("LOLVesting") as LOLVesting__factory;
     const lolVesting = await LOLVesting.deploy(owner.address, lolTokenAddress, recipients, allocations, `${startTime}`, `${duration}`) as LOLVesting;
     await lolVesting.waitForDeployment();
+    const approvalTx = await lolToken.approve(await lolVesting.getAddress(), ethers.parseEther(allocations.reduce((a, b) => `${parseInt(a) + parseInt(b)}`, "0")));
+    await approvalTx.wait();
     _config.LOLVesting[hre.network.name as Networks] = await lolVesting.getAddress();
     console.log(`LOLVesting deployed to: ${await lolVesting.getAddress()}`);
 
