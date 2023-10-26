@@ -52,6 +52,8 @@ export type { LOLExchange } from "./contracts/LOLExchange";
 export { LOLExchange__factory } from "./factories/contracts/LOLExchange__factory";
 export type { LOLNFTExchange } from "./contracts/LOLNFTExchange";
 export { LOLNFTExchange__factory } from "./factories/contracts/LOLNFTExchange__factory";
+export type { LOLStaking } from "./contracts/LOLStaking";
+export { LOLStaking__factory } from "./factories/contracts/LOLStaking__factory";
 export type { LOLToken } from "./contracts/LOLToken";
 export { LOLToken__factory } from "./factories/contracts/LOLToken__factory";
 export type { LOLVesting } from "./contracts/LOLVesting";

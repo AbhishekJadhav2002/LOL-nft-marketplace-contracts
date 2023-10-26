@@ -2,7 +2,7 @@ import fs from "fs";
 import hre, { ethers } from "hardhat";
 import config from "../config/data.json";
 import { Config, Networks } from "../types";
-import { LOL, LOLExchange, LOLExchange__factory, LOLNFTExchange, LOLNFTExchange__factory, LOLToken, LOLToken__factory, LOLVesting, LOLVesting__factory, LOL__factory } from "../types/contracts";
+import { LOL, LOLExchange, LOLExchange__factory, LOLNFTExchange, LOLNFTExchange__factory, LOLStaking, LOLStaking__factory, LOLToken, LOLToken__factory, LOLVesting, LOLVesting__factory, LOL__factory } from "../types/contracts";
 
 async function main() {
     const [owner, ...otherAccounts] = await ethers.getSigners();
@@ -59,6 +59,14 @@ async function main() {
     await approvalTx.wait();
     _config.LOLVesting[hre.network.name as Networks] = await lolVesting.getAddress();
     console.log(`LOLVesting deployed to: ${await lolVesting.getAddress()}`);
+
+    console.log('Deploying LOLStaking...');
+    const rewardPerHour = "1000";
+    const LOLStaking = await ethers.getContractFactory("LOLStaking") as LOLStaking__factory;
+    const lolStaking = await LOLStaking.deploy(owner.address, lolTokenAddress, rewardPerHour) as LOLStaking;
+    await lolStaking.waitForDeployment();
+    _config.LOLStaking[hre.network.name as Networks] = await lolStaking.getAddress();
+    console.log(`LOLStaking deployed to: ${await lolStaking.getAddress()}`);
 
     fs.writeFileSync('./config/data.json', JSON.stringify(_config, null, 2));
 }

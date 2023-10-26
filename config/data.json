@@ -23,5 +23,10 @@
     "localhost": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
     "sepolia": "0xd702d6B0ef45C00257241c21AD6E60c9F2fFeEAE",
     "mainnet": ""
+  },
+  "LOLStaking": {
+    "localhost": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+    "sepolia": "",
+    "mainnet": ""
   }
 }

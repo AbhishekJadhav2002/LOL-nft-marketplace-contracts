@@ -5,6 +5,7 @@ coverage
 coverage.json
 typechain
 typechain-types
+types/contracts/
 
 # Hardhat files
 cache

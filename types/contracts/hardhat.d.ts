@@ -106,6 +106,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LOLNFTExchange__factory>;
     getContractFactory(
+      name: "LOLStaking",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LOLStaking__factory>;
+    getContractFactory(
       name: "LOLToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LOLToken__factory>;
@@ -230,6 +234,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.LOLNFTExchange>;
     getContractAt(
+      name: "LOLStaking",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LOLStaking>;
+    getContractAt(
       name: "LOLToken",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -333,6 +342,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LOLNFTExchange>;
     deployContract(
+      name: "LOLStaking",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LOLStaking>;
+    deployContract(
       name: "LOLToken",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LOLToken>;
@@ -456,6 +469,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LOLNFTExchange>;
+    deployContract(
+      name: "LOLStaking",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LOLStaking>;
     deployContract(
       name: "LOLToken",
       args: any[],
