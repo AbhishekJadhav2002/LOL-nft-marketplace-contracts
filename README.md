@@ -4,7 +4,7 @@
 <hr/>
 
 <!--START_SECTION:coverage-->
-![coverage](https://badgen.net/static/Coverage/100%25/green)
+![coverage](https://badgen.net/static/Coverage/80%25/green)
 <!--END_SECTION:coverage-->
 ## Prerequisites
 
